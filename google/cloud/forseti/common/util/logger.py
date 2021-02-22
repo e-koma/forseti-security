@@ -43,7 +43,7 @@ LOGLEVELS = {
     'warning': logging.WARN,
     'error': logging.ERROR,
 }
-LOGLEVEL = logging.INFO
+LOGLEVEL = logging.DEBUG
 LOG_TO_CONSOLE = False
 
 
