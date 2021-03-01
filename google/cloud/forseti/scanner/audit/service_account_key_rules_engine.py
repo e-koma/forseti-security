@@ -171,13 +171,13 @@ class ServiceAccountKeyRuleBook(bre.BaseRuleBook):
         Returns:
             list: RuleViolation
         """
-        LOGGER.debug('Looking for service account key violations: %s',
+        LOGGER.info('Looking for service account key violations: %s',
                      service_account.full_name)
         violations = []
         resource_ancestors = resource_util.get_ancestors_from_full_name(
             service_account.full_name)
 
-        LOGGER.debug('Ancestors of resource: %r', resource_ancestors)
+        LOGGER.info('Ancestors of resource: %r', resource_ancestors)
 
         checked_wildcards = set()
         for curr_resource in resource_ancestors:
@@ -200,7 +200,7 @@ class ServiceAccountKeyRuleBook(bre.BaseRuleBook):
                 violations.extend(
                     resource_rule.find_violations(service_account))
 
-        LOGGER.debug('Returning violations: %r', violations)
+        LOGGER.info('Returning violations: %r', violations)
         return violations
 
 
@@ -327,8 +327,9 @@ class Rule(object):
         for key in service_account.keys:
             key_id = key.get('key_id')
             full_name = key.get('full_name')
-            LOGGER.debug('Checking key rotation for %s', full_name)
+            LOGGER.info('Checking key rotation for %s', full_name)
             created_time = key.get('valid_after_time')
+            LOGGER.info('created_time: %s', created_time)
             if self._is_more_than_max_age(created_time, scan_time):
                 violation_reason = ('Key ID %s not rotated since %s.' %
                                     (key_id, created_time))
