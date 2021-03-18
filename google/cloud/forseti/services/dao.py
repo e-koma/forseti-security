@@ -330,7 +330,7 @@ def define_model(model_name, dbengine, model_seed):
         name = Column(String(512), nullable=False)
         type = Column(String(128), nullable=False)
         policy_update_counter = Column(Integer, default=0)
-        display_name = Column(String(256), default='')
+        display_name = Column(String(512), default='')
         email = Column(String(256), default='')
         data = Column(Text(16777215))
 
