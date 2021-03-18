@@ -241,9 +241,13 @@ class CsccNotifier(object):
                 new_findings,
                 formatted_cscc_findings)
 
+            cscc_finding_id_list = [f[0] for f in formatted_cscc_findings]
             for finding_list in new_findings:
                 finding_id = finding_list[0]
                 finding = finding_list[1]
+                if finding_id in cscc_finding_id_list:
+                    continue
+
                 LOGGER.debug('Creating finding CSCC:\n%s.', finding)
                 try:
                     client.create_finding(finding, source_id=source_id,
