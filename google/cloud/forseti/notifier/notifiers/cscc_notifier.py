@@ -242,10 +242,16 @@ class CsccNotifier(object):
                 formatted_cscc_findings)
 
             cscc_finding_id_list = [f[0] for f in formatted_cscc_findings]
+            LOGGER.info(f'cscc_finding_id_list: {cscc_finding_id_list}')
+
             for finding_list in new_findings:
                 finding_id = finding_list[0]
                 finding = finding_list[1]
-                if finding_id in cscc_finding_id_list:
+
+                already_notified = finding_id in cscc_finding_id_list
+                LOGGER.info(f'finding_id: {finding_id}, already_notified: {already_notified}')
+
+                if already_notified:
                     continue
 
                 LOGGER.debug('Creating finding CSCC:\n%s.', finding)
