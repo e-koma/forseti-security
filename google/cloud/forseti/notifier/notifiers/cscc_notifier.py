@@ -248,6 +248,7 @@ class CsccNotifier(object):
 
                 already_notified = finding_id in cscc_finding_id_list
                 LOGGER.info(f'finding_id: {finding_id}, already_notified: {already_notified}')
+                LOGGER.info(f'finding: {str(finding)}')
                 if already_notified:
                     continue
 
