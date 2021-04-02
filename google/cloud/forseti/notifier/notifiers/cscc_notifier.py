@@ -156,7 +156,8 @@ class CsccNotifier(object):
                     'scanner_index_id': violation.get('scanner_index_id'),
                     'violation_data': (
                         json.dumps(violation.get('violation_data'),
-                                   sort_keys=True))
+                                   sort_keys=True)),
+                    'flag': 'first_notify'
                 },
             }
             findings.append([finding_id, finding])
@@ -246,10 +247,10 @@ class CsccNotifier(object):
                 finding_id = finding_list[0]
                 finding = finding_list[1]
 
-                already_notified = finding_id in cscc_finding_id_list
-                LOGGER.info(f'finding_id: {finding_id}, already_notified: {already_notified}')
-                if already_notified:
-                    continue
+                if finding_id in cscc_finding_id_list:
+                    finding['source_properties']['flag'] = 'cscc_already_notified'
+                else:
+                    LOGGER.info(f'finding_id: {finding_id} is send for the first time')
 
                 LOGGER.debug('Creating finding CSCC:\n%s.', finding)
                 try:
